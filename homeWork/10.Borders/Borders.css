@@ -1,0 +1,27 @@
+.red{
+  color: red;
+}
+.green{
+  color: green;
+}
+.blue{
+  color: blue;
+}
+p{
+  font-size: 30px;
+  background-color: #c3c6cc;
+  border-radius: 10px;
+  text-align: center;
+  margin-left: 800px;
+  margin-right: 800px;
+  left: 100px;
+}
+.redP{
+    border: solid 5px red;
+}
+.greenP{
+    border: solid 5px green;
+}
+.blueP{
+    border: solid 5px blue;
+}

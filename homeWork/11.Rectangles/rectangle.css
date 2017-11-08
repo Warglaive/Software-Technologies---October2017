@@ -1,0 +1,19 @@
+.dotted{
+  border: dotted 5px;
+  border-radius: 15px;
+  padding: 100px;
+  border-color: blue;
+}
+.dashed{
+  border: dashed red;
+  border-radius: 15px;
+  padding: 90px;
+}
+.solid{
+border: solid green;
+padding-top: 10px;
+padding-bottom: 50px;
+border-radius: 10px;
+text-align: center;
+font-size: 50px;
+}
