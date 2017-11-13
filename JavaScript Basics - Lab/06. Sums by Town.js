@@ -1,17 +1,17 @@
-let arr = ['{"town":"Sofia","income":200}', '{"town":"Varna","income":120}', '{"town":"Pleven","income":60}', '{"town":"Varna","income":70}'];
-let result = new Array();
-let sum = 0;
-for (let i = 0; i < arr.length; i++) {
-    let s = arr[i];
-    let pairs = JSON.parse(s);
+function main(arr) {
+    let result = new Array();
+    let objects = arr.map(JSON.parse);
+    for (let obj of objects) {
 
-    let town = pairs.town;
-    let income = pairs.income;
-    if (!result.hasOwnProperty(town)) {
-        result.push(town);
+        if (obj.town in result) {
+            result[obj.town] += obj.income;
+        }
+        else {
+            result[obj.town] = obj.income;
+        }
     }
-
-    result[town] = income;
+    let sort = Object.keys(result).sort();
+    for (let obj of sort) {
+        console.log(`${obj} -> ${result[obj]}`)
+    }
 }
-
-console.log(result);
