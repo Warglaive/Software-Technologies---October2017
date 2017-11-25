@@ -10,6 +10,13 @@
         N: <input type="text" name="num" />
         <input type="submit" />
     </form>
-	<!--Write your PHP Script here-->
+    <?php
+    if (isset($_GET['num'])) {
+        $num = floatval($_GET['num']);
+        for ($i = $num; $i >= 1; $i--) {
+            echo $i . " ";
+        }
+    }
+    ?>
 </body>
 </html>

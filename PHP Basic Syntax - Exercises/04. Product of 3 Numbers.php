@@ -6,12 +6,38 @@
 
 </head>
 <body>
-    <form>
-        X: <input type="text" name="num1" />
-		Y: <input type="text" name="num2" />
-        Z: <input type="text" name="num3" />
-		<input type="submit" />
-    </form>
-	<!--Write your PHP Script here-->
+<form>
+    X: <input type="text" name="num1"/>
+    Y: <input type="text" name="num2"/>
+    Z: <input type="text" name="num3"/>
+    <input type="submit"/>
+</form>
+<?php
+$result = "";
+if (isset($_GET['num1']) && isset($_GET['num2']) && isset($_GET['num3'])) {
+    $num1 = floatval($_GET['num1']);
+    $num2 = floatval($_GET['num2']);
+    $num3 = floatval($_GET['num3']);
+    if (($num1 >= 0 && $num2 <= 0 && $num3 <= 0)
+        ||
+        ($num1 <= 0 && $num2 >= 0 && $num3 <= 0)
+        ||
+        ($num1 <= 0 && $num2 <= 0 && $num3 >= 0)) {
+        $result = "Positive";
+        echo $result;
+    }
+
+
+
+    else if ($num1 < 0 || $num2 < 0 || $num3 < 0) {
+        $result = "Negative";
+        echo $result;
+    } else {
+        $result = "Positive";
+        echo $result;
+    }
+
+}
+?>
 </body>
 </html>

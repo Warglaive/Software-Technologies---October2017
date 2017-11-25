@@ -6,10 +6,19 @@
 
 </head>
 <body>
-    <form>
-        N: <input type="text" name="num" />
-        <input type="submit" />
-    </form>
-	<!--Write your PHP Script here-->
+<form>
+    N: <input type="text" name="num"/>
+    <input type="submit"/>
+</form>
+<?php
+if (isset($_GET['num'])) {
+    $num = floatval($_GET['num']);
+    for ($i = $num; $i >= 1; $i--) {
+        if ($num % $i != 0) {
+            echo $i . " ";
+        }
+    }
+}
+?>
 </body>
 </html>

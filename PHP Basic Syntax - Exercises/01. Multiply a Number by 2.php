@@ -6,9 +6,16 @@
 
 </head>
 <body>
-    <form>
-        N: <input type="text" name="num" />
-        <input type="submit" />
-    </form>
+<form>
+    N: <input type="text" name="num"/>
+    <input type="submit"/>
+</form>
 </body>
 </html>
+
+<?php
+if (isset($_GET['num'])) {
+    $result = floatval($_GET['num']);
+    echo $result * 2;
+}
+?>
