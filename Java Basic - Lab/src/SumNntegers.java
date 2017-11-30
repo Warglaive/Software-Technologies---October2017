@@ -12,5 +12,4 @@ public class SumNntegers {
         }
         System.out.println(result);
     }
-
 }

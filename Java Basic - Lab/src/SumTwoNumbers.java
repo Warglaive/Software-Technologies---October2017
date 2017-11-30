@@ -6,6 +6,5 @@ public class SumTwoNumbers {
         double num1 = Double.parseDouble(scan.nextLine());
         double num2 = Double.parseDouble(scan.nextLine());
         System.out.println(num1 + num2);
-
     }
 }
