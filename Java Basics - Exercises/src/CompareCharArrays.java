@@ -17,6 +17,7 @@ public class CompareCharArrays {
             tallerArray = arr1.clone();
             shorterArray = arr2.clone();
         }
+
         for (int i = 0; i < smallerArrayCount; i++) {
             if (arr1[i] == arr2[i]) {
                 continue;
