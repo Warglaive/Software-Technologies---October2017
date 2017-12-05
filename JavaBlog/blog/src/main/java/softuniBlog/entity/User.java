@@ -22,7 +22,6 @@ public class User {
         this.email = email;
         this.password = password;
         this.fullName = fullName;
-
         this.roles = new HashSet<>();
     }
 
