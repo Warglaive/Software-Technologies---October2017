@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import softuniBlog.bindingModel.ArticleBindingModel;
+import softuniBlog.entity.Article;
+import softuniBlog.entity.User;
 import softuniBlog.repository.ArticleRepository;
 import softuniBlog.repository.UserRepository;
 
@@ -33,5 +35,13 @@ public class ArticleController {
                 .getAuthentication()
                 .getPrincipal();
 
+        User userEntity = this.userRepository.findByEmail(user.getUsername());
+        Article articleEntity = new Article(
+                articleBindingModel.getTitle()
+                , articleBindingModel.getContent(),
+                userEntity
+        );
+        this.articleRepository.saveAndFlush(articleEntity);
+        return "redirect:/";
     }
 }

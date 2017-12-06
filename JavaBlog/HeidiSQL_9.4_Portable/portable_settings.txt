@@ -78,7 +78,7 @@ Servers\Database Connection\SSL_Cert<|||>1<|||>
 Servers\Database Connection\SSL_CA<|||>1<|||>
 Servers\Database Connection\SSL_Cipher<|||>1<|||>
 Servers\Database Connection\ServerVersionFull<|||>1<|||>10.1.13-MariaDB - mariadb.org binary distribution
-Servers\Database Connection\ConnectCount<|||>3<|||>11
+Servers\Database Connection\ConnectCount<|||>3<|||>12
 Servers\Database Connection\ServerVersion<|||>3<|||>100113
-Servers\Database Connection\LastConnect<|||>1<|||>2017-12-07 00:13:38
+Servers\Database Connection\LastConnect<|||>1<|||>2017-12-07 01:54:29
 Servers\Database Connection\lastUsedDB<|||>1<|||>java_blog
