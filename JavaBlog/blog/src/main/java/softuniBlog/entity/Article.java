@@ -55,4 +55,14 @@ public class Article {
         this.content = content;
         this.author = author;
     }
+
+    public Article() {
+
+    }
+
+    @Transient
+    public String getSummary() {
+        return this.getContent().substring(0, this.getContent().length() / 2) + "...";
+
+    }
 }
