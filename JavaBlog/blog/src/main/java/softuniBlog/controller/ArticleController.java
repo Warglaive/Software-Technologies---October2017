@@ -84,8 +84,6 @@ public class ArticleController {
         return "redirect:/article/" + article.getId();
     }
 
-
-    //delete view page - WORKING
     @GetMapping("article/delete/{id}")
     @PreAuthorize("isAuthenticated()")
     public String delete(Model model, @PathVariable Integer id) {
@@ -98,7 +96,6 @@ public class ArticleController {
         return "base-layout";
     }
 
-    //BUG HERE
     @PostMapping("article/delete/{id}")
     @PreAuthorize("isAuthenticated()")
     public String deleteProcess(Model model, @PathVariable Integer id) {
