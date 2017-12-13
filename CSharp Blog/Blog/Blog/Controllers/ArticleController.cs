@@ -78,5 +78,62 @@ namespace Blog.Controllers
             }
             return View(article);
         }
+        //Get Article/Delete
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            using (var database = new BlogDbContext())
+            {
+                //get Article from database
+                var article = database.Articles
+                    .Where(a => a.Id == id)
+                    .Include(a => a.Author)
+                    .First();
+                //check if article exists
+                if (article == null)
+                {
+                    return HttpNotFound();
+                }
+                else
+                {
+                    return View(article);
+                }
+            }
+        }
+        //POST: Article/Delete
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                using (var database = new BlogDbContext())
+                {
+                    //get article from DB
+                    var article = database.Articles.Where(a => a.Id == id)
+                        .Include(a => a.Author)
+                        .First();
+                    //if article dont exists
+                    if (article == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    //remove article from db if exist
+                    else
+                    {
+                        database.Articles.Remove(article);
+                        database.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+        }
     }
 }
