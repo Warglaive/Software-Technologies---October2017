@@ -135,5 +135,55 @@ namespace Blog.Controllers
                 }
             }
         }
+        //GET: Article/Edit
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            using (var database = new BlogDbContext())
+            {
+                //get article from database
+                var article = database.Articles
+                    .Where(a => a.Id == id)
+                    .First();
+                //article exists
+                if (article == null)
+                {
+                    return HttpNotFound();
+                }
+                //Create view model if article exists
+                var model = new ArticleViewModel();
+                model.Id = article.Id;
+                model.Title = article.Title;
+                model.Content = article.Content;
+                //pass to the view
+                return View(model);
+            }
+        }
+        //POST: Article/Edit
+        [HttpPost]
+        public ActionResult Edit(ArticleViewModel model)
+        {
+            //check if model state is valid
+            if (ModelState.IsValid)
+            {
+                using (var database = new BlogDbContext())
+                {
+                    //GET ARticle from DB
+                    var article = database.Articles.FirstOrDefault(a => a.Id == model.Id);
+                    //Set new values
+                    article.Title = model.Title;
+                    article.Content = model.Content;
+                    //save article state in DB
+                    database.Entry(article).State = EntityState.Modified;
+                    database.SaveChanges();
+                    //return to index page
+                    return RedirectToAction("Index");
+                }
+            }
+            return View(model);
+        }
     }
 }
