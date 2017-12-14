@@ -53,12 +53,14 @@ namespace Blog.Controllers
             }
         }
         //GET: Article/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
         //POST: Article/Create
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Article article)
         {
             if (ModelState.IsValid)
@@ -79,6 +81,7 @@ namespace Blog.Controllers
             return View(article);
         }
         //Get Article/Delete
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -92,6 +95,10 @@ namespace Blog.Controllers
                     .Where(a => a.Id == id)
                     .Include(a => a.Author)
                     .First();
+                if (!isUserAuthorizedToEdit(article))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }
                 //check if article exists
                 if (article == null)
                 {
@@ -104,6 +111,7 @@ namespace Blog.Controllers
             }
         }
         //POST: Article/Delete
+        [Authorize]
         [HttpPost]
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int? id)
@@ -136,6 +144,7 @@ namespace Blog.Controllers
             }
         }
         //GET: Article/Edit
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -148,6 +157,10 @@ namespace Blog.Controllers
                 var article = database.Articles
                     .Where(a => a.Id == id)
                     .First();
+                if (!isUserAuthorizedToEdit(article))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }
                 //article exists
                 if (article == null)
                 {
@@ -163,6 +176,7 @@ namespace Blog.Controllers
             }
         }
         //POST: Article/Edit
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(ArticleViewModel model)
         {
@@ -184,6 +198,13 @@ namespace Blog.Controllers
                 }
             }
             return View(model);
+        }
+
+        private bool isUserAuthorizedToEdit(Article article)
+        {
+            bool isAdmin = this.User.IsInRole("Admin");
+            bool isAuthor = article.isAuthor(this.User.Identity.Name);
+            return isAdmin || isAuthor;
         }
     }
 }
