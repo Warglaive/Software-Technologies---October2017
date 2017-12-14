@@ -23,39 +23,48 @@ public class TaskController {
 
     @GetMapping("/")
     public String index(Model model) {
-        //TODO:Implement me...
-
-        model.addAttribute("tasks", null);
+        List<Task> tasks = taskRepository.findAll();
+        model.addAttribute("tasks", tasks);
         model.addAttribute("view", "task/index");
-
         return "base-layout";
     }
 
     @GetMapping("/create")
     public String create(Model model) {
-        //TODO:Implement me...
-
-        return null;
+        model.addAttribute("task", new TaskBindingModel());
+        model.addAttribute("view", "task/create");
+        return "base-layout";
     }
 
     @PostMapping("/create")
     public String createProcess(Model model, TaskBindingModel taskBindingModel) {
-        //TODO:Implement me...
-
-        return null;
+        if (taskBindingModel.equals("") || taskBindingModel.getComments().equals("")) {
+            model.addAttribute("task", taskBindingModel);
+            model.addAttribute("view", "task/create");
+            return "base-layout";
+        }
+        Task task = new Task();
+        task.setTitle(taskBindingModel.getTitle());
+        task.setComments(taskBindingModel.getComments());
+        taskRepository.saveAndFlush(task);
+        return "redirect:/";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(Model model, @PathVariable int id) {
-        //TODO:Implement me...
-
-        return null;
+        Task taskId = taskRepository.findOne(id);
+        if (taskId != null) {
+            model.addAttribute("task", taskId);
+            model.addAttribute("view", "task/delete");
+            return "base-layout";
+        }
+        return "redirect:/";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteProcess(Model model, @PathVariable int id) {
-        //TODO:Implement me...
-
-        return null;
+        Task taskId = taskRepository.findOne(id);
+        taskRepository.delete(taskId);
+        return "redirect:/";
     }
 }
