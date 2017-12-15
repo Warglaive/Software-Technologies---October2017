@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Task
  *
- * @ORM\Table(name="tasks")
+ * @ORM\Table(name="task")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TaskRepository")
  */
 class Task
@@ -15,30 +15,30 @@ class Task
     /**
      * @var int
      *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string" length=255)
-     * @NotBlank
+     * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comments",type="string")
-     * @NotBlank
-     *
+     * @ORM\Column(name="comments", type="string", length=255)
      */
     private $comments;
 
+
     /**
+     * Get id
+     *
      * @return int
      */
     public function getId()
@@ -47,14 +47,22 @@ class Task
     }
 
     /**
-     * @param int $id
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Task
      */
-    public function setId($id)
+    public function setTitle($title)
     {
-        $this->id = $id;
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
+     * Get title
+     *
      * @return string
      */
     public function getTitle()
@@ -63,29 +71,27 @@ class Task
     }
 
     /**
-     * @param string $title
+     * Set comments
+     *
+     * @param string $comments
+     *
+     * @return Task
      */
-    public function setTitle($title)
+    public function setComments($comments)
     {
-        $this->title = $title;
+        $this->comments = $comments;
+
+        return $this;
     }
 
     /**
+     * Get comments
+     *
      * @return string
      */
     public function getComments()
     {
         return $this->comments;
     }
-
-    /**
-     * @param string $comments
-     */
-    public function setComments($comments)
-    {
-        $this->comments = $comments;
-    }
-
-
 }
 

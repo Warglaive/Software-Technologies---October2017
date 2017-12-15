@@ -17,7 +17,10 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        //TODO: Implement me...
+        $repo = $this->getDoctrine()->getRepository(Task::class);
+        $tasks = $repo->findAll();
+        return $this->render(":task:index.html.twig",
+            ["tasks" => $tasks]);
     }
 
     /**
@@ -27,7 +30,19 @@ class TaskController extends Controller
      */
     public function create(Request $request)
     {
-        //TODO: Implement me...
+        $task = new Task();
+        $form = $this->createForm(TaskType::class, $task);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($task);
+            $em->flush();
+            return $this->redirect("/");
+        }
+        return $this->render(
+            ":task:create.html.twig",
+            ["task" => $task, "form" => $form->createView()]
+        );
     }
 
     /**
@@ -39,6 +54,19 @@ class TaskController extends Controller
      */
     public function delete($id, Request $request)
     {
-        //TODO: Implement me...
+        $repo = $this->getDoctrine()->getRepository(Task::class);
+        $task = $repo->find($id);
+        if ($task == null) {
+            return $this->redirect("/");
+        }
+        $form = $this->createForm(TaskType::class, $task);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($task);
+            $em->flush();
+            return $this->redirect("/");
+        }
+        return $this->render(":task:delete.html.twig", ["task" => $task, "form" => $form->createView()]);
     }
 }
