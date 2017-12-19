@@ -12,14 +12,18 @@ namespace IMDB.Controllers
         [Route("")]
         public ActionResult Index()
         {
-            //TODO: Implement me ...
+            using (var db = new IMDBDbContext())
+            {
+                var films = db.Films.ToList();
+                return View(films);
+            }
         }
 
         [HttpGet]
         [Route("create")]
         public ActionResult Create()
         {
-            //TODO: Implement me ...
+            return View();
         }
 
         [HttpPost]
@@ -27,29 +31,70 @@ namespace IMDB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Film film)
         {
-            //TODO: Implement me ...
+            if (ModelState.IsValid)
+            {
+                using (var db = new IMDBDbContext())
+                {
+                    db.Films.Add(film);
+                    db.SaveChanges();
+                    return Redirect("/");
+                }
+            }
+            return View();
         }
 
         [HttpGet]
         [Route("edit/{id}")]
         public ActionResult Edit(int? id)
         {
-            //TODO: Implement me ...
+            using (var db = new IMDBDbContext())
+            {
+                var film = db.Films.Find(id);
+                if (film != null)
+                {
+                    return View(film);
+                }
+            }
+            return Redirect("/");
         }
 
         [HttpPost]
         [Route("edit/{id}")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditConfirm(int? id, Film filmModel)
+        public ActionResult Edit(int? id, Film filmModel)
         {
-            //TODO: Implement me ...
+            if (!ModelState.IsValid)
+            {
+                return View(filmModel);
+            }
+            using (var db = new IMDBDbContext())
+            {
+                var filmFromDB = db.Films.Find(filmModel.Id);
+                if (filmFromDB != null)
+                {
+                    filmFromDB.Name = filmModel.Name;
+                    filmFromDB.Genre = filmModel.Genre;
+                    filmFromDB.Director = filmModel.Director;
+                    filmFromDB.Year = filmModel.Year;
+                    db.SaveChanges();
+                }
+            }
+            return Redirect("/");
         }
 
         [HttpGet]
         [Route("delete/{id}")]
         public ActionResult Delete(int? id)
         {
-            //TODO: Implement me ...
+            using (var db = new IMDBDbContext())
+            {
+                var film = db.Films.Find(id);
+                if (film != null)
+                {
+                    return View(film);
+                }
+            }
+            return Redirect("/");
         }
 
         [HttpPost]
@@ -57,7 +102,16 @@ namespace IMDB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirm(int? id, Film filmModel)
         {
-            //TODO: Implement me ...
+            using (var db = new IMDBDbContext())
+            {
+                var film = db.Films.Find(id);
+                if (film != null)
+                {
+                    db.Films.Remove(film);
+                    db.SaveChanges();
+                }
+            }
+            return Redirect("/");
         }
     }
 }
